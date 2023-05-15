@@ -36,6 +36,9 @@ public class Person {
     @Email
     @Column(name = "email")
     private String email;
+    @Column(name = "tel")
+    private String tel;
+
 
     public Person() {}
 
@@ -94,11 +97,6 @@ public class Person {
     public void setTel(String tel) {
         this.tel = tel;
     }
-
-    @Column(name = "tel")
-    private String tel;
-
-
 
 
 }

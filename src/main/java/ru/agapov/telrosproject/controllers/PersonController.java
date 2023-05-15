@@ -1,29 +1,31 @@
 package ru.agapov.telrosproject.controllers;
 
 import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import ru.agapov.telrosproject.DTO.PersonDTO;
+import ru.agapov.telrosproject.dto.PersonDTO;
 import ru.agapov.telrosproject.models.Person;
 import ru.agapov.telrosproject.services.PersonService;
 import ru.agapov.telrosproject.util.PersonErrorResponse;
 import ru.agapov.telrosproject.util.PersonNotCreatedException;
 import ru.agapov.telrosproject.util.PersonNotFoundException;
 
-import javax.naming.Binding;
 import java.util.List;
 
 @RestController
 @RequestMapping("/people")
 public class PersonController {
     private final PersonService personService;
+    private final ModelMapper modelMapper;
     @Autowired
-    public PersonController(PersonService personService) {
+    public PersonController(PersonService personService, ModelMapper modelMapper) {
         this.personService = personService;
+        this.modelMapper = modelMapper;
     }
 
     @PostMapping("/add")
@@ -61,13 +63,13 @@ public class PersonController {
     @ExceptionHandler
     private ResponseEntity<PersonErrorResponse> handleException(PersonNotCreatedException e) {
         PersonErrorResponse personErrorResponse = new PersonErrorResponse(
-                "Person wasn't found;" + e.getMessage(),
+                "Person wasn't created;" + e.getMessage(),
                 System.currentTimeMillis()
         );
         return new ResponseEntity<>(personErrorResponse, HttpStatus.BAD_REQUEST);
     }
 
     private Person convertToPerson(PersonDTO personDTO) {
-
+        return modelMapper.map(personDTO, Person.class);
     }
 }
