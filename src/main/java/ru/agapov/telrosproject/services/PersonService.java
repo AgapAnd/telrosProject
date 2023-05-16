@@ -7,6 +7,7 @@ import ru.agapov.telrosproject.models.Person;
 import ru.agapov.telrosproject.repositories.PersonRepository;
 import ru.agapov.telrosproject.util.PersonNotFoundException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,11 +29,23 @@ public class PersonService {
         return foundPerson.orElseThrow(PersonNotFoundException::new);
     }
 
-    public void update() {
+    public List<Person> findAll() {
+        return personRepository.findAll();
+    }
+
+    public void update(Person person, int id) {
+        Person personToUpdate = findById(id);
+
+        personToUpdate.setName(person.getName());
+        personToUpdate.setSurname(person.getSurname());
+        personToUpdate.setPatronymic(person.getPatronymic());
+        personToUpdate.setDateOfBirth(person.getDateOfBirth());
+        personToUpdate.setEmail(person.getEmail());
+        personToUpdate.setTel(person.getTel());
 
     }
 
-    public void delete(Person person) {
-        personRepository.delete(person);
+    public void deleteById(int id) {
+        personRepository.deleteById(id);
     }
 }
