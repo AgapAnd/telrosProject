@@ -1,3 +1,6 @@
+/*
+    Контроллер для обработки http запросов
+*/
 package ru.agapov.telrosproject.controllers;
 
 import jakarta.validation.Valid;
@@ -29,13 +32,15 @@ public class PersonController {
         this.personService = personService;
         this.modelMapper = modelMapper;
     }
-
+// GET - запрос по адресу "localhost:8080/people" возвращает клиенту JSON со списком всех людей из БД
     @GetMapping
     public List<PersonDTO> findAll() {
         return personService.findAll().stream().map(this::convertToPersonDTO).collect(Collectors.toList());
     }
 
-
+/*  POST - запрос по адресу "localhost:8080/people/add" добавляет нового человека в БД
+    Данные пользователя передаются через JSON
+*/
     @PostMapping("/add")
     public ResponseEntity<HttpStatus> addPerson(@RequestBody @Valid PersonDTO personDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -45,12 +50,15 @@ public class PersonController {
         personService.save(convertToPerson(personDTO));
         return ResponseEntity.ok(HttpStatus.OK);
     }
+// GET - запрос по адресу "localhost:8080/people/{id}" возвращает клиенту JSON с данными по человку с номером id
 
     @GetMapping("/{id}")
     public Person findPerson(@PathVariable("id") int id) {
         return personService.findById(id);
     }
-
+/*  PATCH - запрос по адресу "localhost:8080/people/{id}" позволяет менять данные человека из БД с номером id
+    Данные пользователя передаются через JSON, включая изменённые данные
+*/
     @PatchMapping("/{id}")
     public ResponseEntity<HttpStatus> updatePerson(@PathVariable("id") int id,
                                @RequestBody @Valid PersonDTO personDTO,

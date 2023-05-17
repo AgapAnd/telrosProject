@@ -35,13 +35,18 @@ public class PersonService {
 
     public void update(Person person, int id) {
         Person personToUpdate = findById(id);
-
-        personToUpdate.setName(person.getName());
-        personToUpdate.setSurname(person.getSurname());
-        personToUpdate.setPatronymic(person.getPatronymic());
-        personToUpdate.setDateOfBirth(person.getDateOfBirth());
-        personToUpdate.setEmail(person.getEmail());
-        personToUpdate.setTel(person.getTel());
+        if (person.getName() != null)
+            personToUpdate.setName(person.getName());
+        if (person.getSurname() != null)
+            personToUpdate.setSurname(person.getSurname());
+        if (person.getPatronymic() != null)
+            personToUpdate.setPatronymic(person.getPatronymic());
+        if (person.getDateOfBirth() != null)
+            personToUpdate.setDateOfBirth(person.getDateOfBirth());
+        if (person.getEmail() != null)
+            personToUpdate.setEmail(person.getEmail());
+        if (person.getTel() != null)
+            personToUpdate.setTel(person.getTel());
 
     }
 
