@@ -1,3 +1,7 @@
+/**
+ *  Сервис для связи контроллера и базы данных, а также для реализации логики нашего приложения
+ */
+
 package ru.agapov.telrosproject.services;
 
 import org.springframework.beans.factory.annotation.Autowired;

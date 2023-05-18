@@ -1,5 +1,5 @@
-/*
-    Контроллер для обработки http запросов
+/**
+ * Контроллер для обработки http запросов
 */
 package ru.agapov.telrosproject.controllers;
 
@@ -8,7 +8,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -61,7 +60,7 @@ public class PersonController {
 */
     @PatchMapping("/{id}")
     public ResponseEntity<HttpStatus> updatePerson(@PathVariable("id") int id,
-                               @RequestBody @Valid PersonDTO personDTO,
+                               @RequestBody PersonDTO personDTO,
                                BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             StringBuilder errorMsg = checkBindingResult(bindingResult);
@@ -74,7 +73,8 @@ public class PersonController {
             return ResponseEntity.ok(HttpStatus.OK);
         }
     }
-
+// DELETE - запрос по адресу "localhost:8080/people/{id}" позволяет удалить человека из БД
+// предварительно проверив его наличие в этой БД
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deletePerson(@PathVariable("id") int id) {
         if (!personService.findAll().stream().anyMatch(p->p.getId() == id))
@@ -84,7 +84,7 @@ public class PersonController {
             return ResponseEntity.ok(HttpStatus.OK);
         }
     }
-
+// Обработка исключений при их выбрасывании в результате определённых ошибок
     @ExceptionHandler
     private ResponseEntity<PersonErrorResponse> handleException(PersonNotFoundException e) {
         PersonErrorResponse personErrorResponse = new PersonErrorResponse(
@@ -103,6 +103,7 @@ public class PersonController {
         return new ResponseEntity<>(personErrorResponse, HttpStatus.BAD_REQUEST);
     }
 
+// вспомогательные методы для перевода сущности Person в DTO и обратно для получения данных от клиента и передачи в БД
     private Person convertToPerson(PersonDTO personDTO) {
         return modelMapper.map(personDTO, Person.class);
     }
@@ -111,6 +112,7 @@ public class PersonController {
         return modelMapper.map(person, PersonDTO.class);
     }
 
+// Обработка ошибок из BindingResult - вынес логику в отдельный метод, чтобы не дублировать код
     private StringBuilder checkBindingResult(BindingResult bindingResult) {
         StringBuilder errorMsg = new StringBuilder();
 

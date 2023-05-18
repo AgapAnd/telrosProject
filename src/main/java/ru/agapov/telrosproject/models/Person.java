@@ -1,10 +1,12 @@
+/**
+ * Описание сущности Person и её связь с БД через Hibernate
+ */
 package ru.agapov.telrosproject.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;

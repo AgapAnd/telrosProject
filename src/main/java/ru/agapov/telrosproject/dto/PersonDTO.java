@@ -1,3 +1,8 @@
+/**
+ * Описание сущности DTO
+  */
+
+
 package ru.agapov.telrosproject.dto;
 
 import jakarta.validation.constraints.Email;
@@ -9,10 +14,10 @@ import java.time.LocalDate;
 
 public class PersonDTO {
         @Size(min = 2, max = 10, message = "Name of sensor should be between 2 and 10 characters")
-//        @NotEmpty(message = "Name should not be empty!")
+        @NotEmpty(message = "Name should not be empty!")
         private String name;
         @Size(min = 2, max = 10, message = "Name of sensor should be between 2 and 10 characters")
-//        @NotEmpty(message = "Surname should not be empty!")
+        @NotEmpty(message = "Surname should not be empty!")
         private String surname;
 
         private String patronymic;

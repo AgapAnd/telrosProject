@@ -1,3 +1,6 @@
+/**
+ * Репозиторий нашей сущности для запросов к БД
+ */
 package ru.agapov.telrosproject.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
